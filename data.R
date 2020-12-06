@@ -45,8 +45,8 @@ dlog.emae.adj <- dlog.emae.reg$residuals
 dlog_residuos <- as.numeric(dlog.emae.adj)
 dlog_residuos <- ts(dlog_residuos, start = c(2004, 01), end = c(2019, 12), frequency = 12)
 
-#DATOS INFLACIÓN
-#Traemos IPC base 2020 generado en ejercitación 1.
+#DATOS INFLACIÃ“N
+#Traemos IPC base 2020 generado en ejercitaciÃ³n 1.
 source("PS1_Data.R")
 
 #Construimos variables como pide la consigna.
@@ -71,5 +71,25 @@ badlar <- window(badlar, end = c(2019, 12))
 
 i = 100 * log(1+ badlar/1200)
 
+#Primeras diferencias.
+
+#EMAE
+emae_dif = diff(dlog_residuos)
+plot(emae_dif)
+
+#Inflacion
+pi_dif = diff(pi)
+plot(pi_dif)
+
+#Tasa de interÃ©s nominal.
+i_dif = diff(i)
+plot(i_dif)
+
 #Tasa real mensual.
 r = i- pi
+plot(r)
+
+#Test de raiz unitaria de Dickey Fuller
+library(urca)
+r_df <- ur.df(y = r, type = "drift", lags = 2, selectlags = "Fixed") # ***
+summary(r_df)
