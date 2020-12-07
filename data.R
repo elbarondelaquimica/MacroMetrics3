@@ -51,7 +51,7 @@ source("PS1_Data.R")
 
 #Construimos variables como pide la consigna.
 
-pc = window(pc, start = c(2004, 1), end = c(2019, 12))
+pc = window(pc, start = c(2003, 12), end = c(2019, 12))
 pi = 100 * diff(log(pc))
 
 #SERIE BADLAR
@@ -67,7 +67,7 @@ badlar <- badlar[complete.cases(badlar)]
 
 #badlar <- badlar[which(badlar != 0, arr.ind = TRUE)]
 badlar <- ts(badlar, start = c(1999, 1), frequency = 12)
-badlar <- window(badlar, end = c(2019, 12))
+badlar <- window(badlar, start = c(2004, 1), end = c(2019, 12))
 
 i = 100 * log(1+ badlar/1200)
 
@@ -91,5 +91,17 @@ plot(r)
 
 #Test de raiz unitaria de Dickey Fuller
 library(urca)
+#Para las variables en diferencias
+i_dif_df <- ur.df(y = i_dif, type = "drift", lags = 2, selectlags = "Fixed") # ***
+pi_dif_df <- ur.df(y = pi_dif, type = "drift", lags = 2, selectlags = "Fixed") # ***
+emae_dif_df <- ur.df(y = emae_dif, type = "drift", lags = 2, selectlags = "Fixed") # ***
+#Para las variables sin estar en diferencias.
 r_df <- ur.df(y = r, type = "drift", lags = 2, selectlags = "Fixed") # ***
+i_df <- ur.df(y = i, type = "drift", lags = 2, selectlags = "Fixed") # ***
+emae_df <- ur.df(y = emae, type = "drift", lags = 2, selectlags = "Fixed") # ***
+pi_df <- ur.df(y = pi, type = "drift", lags = 2, selectlags = "Fixed") # ***
+
+#Completar con los summary, que son las salidas.
 summary(r_df)
+
+Y <- cbind(i_dif, pi_dif, emae_dif)
