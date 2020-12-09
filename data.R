@@ -10,7 +10,7 @@ emae <- emae[c(1,3)]
 emae_num <- as.numeric(emae$emae_desestacionalizada)
 emae_num <- ts(emae_num, start = c(2004, 01), end = c(2020, 07), frequency = 12)
 emae_num <- window(emae_num, end = c(2019, 12))
-plot(emae_num)
+#plot(emae_num)
 emae <- emae_num[complete.cases(emae_num)] # delete NAs
 emae <- 100* log(emae)
 
@@ -45,8 +45,8 @@ dlog.emae.adj <- dlog.emae.reg$residuals
 dlog_residuos <- as.numeric(dlog.emae.adj)
 dlog_residuos <- ts(dlog_residuos, start = c(2004, 01), end = c(2019, 12), frequency = 12)
 
-#DATOS INFLACIÓN
-#Traemos IPC base 2020 generado en ejercitación 1.
+#DATOS INFLACIÃN
+#Traemos IPC base 2020 generado en ejercitaciÃ³n 1.
 source("PS1_Data.R")
 
 #Construimos variables como pide la consigna.
@@ -75,33 +75,39 @@ i = 100 * log(1+ badlar/1200)
 
 #EMAE
 emae_dif = diff(dlog_residuos)
-plot(emae_dif)
+#plot(emae_dif)
 
 #Inflacion
 pi_dif = diff(pi)
-plot(pi_dif)
+#plot(pi_dif)
 
-#Tasa de interés nominal.
+#Tasa de interÃ©s nominal.
 i_dif = diff(i)
-plot(i_dif)
+#plot(i_dif)
 
 #Tasa real mensual.
 r = i- pi
-plot(r)
+#plot(r)
 
 #Test de raiz unitaria de Dickey Fuller
-library(urca)
+#library(urca)
 #Para las variables en diferencias
-i_dif_df <- ur.df(y = i_dif, type = "drift", lags = 2, selectlags = "Fixed") # ***
-pi_dif_df <- ur.df(y = pi_dif, type = "drift", lags = 2, selectlags = "Fixed") # ***
-emae_dif_df <- ur.df(y = emae_dif, type = "drift", lags = 2, selectlags = "Fixed") # ***
+#i_dif_df <- ur.df(y = i_dif, type = "drift", lags = 2, selectlags = "Fixed") # ***
+#pi_dif_df <- ur.df(y = pi_dif, type = "drift", lags = 2, selectlags = "Fixed") # ***
+#emae_dif_df <- ur.df(y = emae_dif, type = "drift", lags = 2, selectlags = "Fixed") # ***
+
 #Para las variables sin estar en diferencias.
-r_df <- ur.df(y = r, type = "drift", lags = 2, selectlags = "Fixed") # ***
-i_df <- ur.df(y = i, type = "drift", lags = 2, selectlags = "Fixed") # ***
-emae_df <- ur.df(y = emae, type = "drift", lags = 2, selectlags = "Fixed") # ***
-pi_df <- ur.df(y = pi, type = "drift", lags = 2, selectlags = "Fixed") # ***
+#r_df <- ur.df(y = r, type = "drift", lags = 2, selectlags = "Fixed") # ***
+#i_df <- ur.df(y = i, type = "drift", lags = 2, selectlags = "Fixed") # ***
+#emae_df <- ur.df(y = emae, type = "drift", lags = 2, selectlags = "Fixed") # ***
+#pi_df <- ur.df(y = pi, type = "drift", lags = 2, selectlags = "Fixed") # ***
+
+
+# Remove variables
+remove(anio, badlar.file, dlog.emae.adj, d2009, d2009_1, d2009_2, d2012, d2012_1, d2012_2, d2018, d2018_1, d2018_2)
+
 
 #Completar con los summary, que son las salidas.
-summary(r_df)
+#summary(r_df)
 
 Y <- cbind(i_dif, pi_dif, emae_dif)
