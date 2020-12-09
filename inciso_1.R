@@ -1,10 +1,42 @@
+#-------------------------------------------------------------#
+#               Inciso 1
+#-------------------------------------------------------------#  
+# Required libraries
 library(tsbox) # for working with different objects
 library(ggplot2)  # for creating graphs
-source("data.R")
+library(urca) # for tests
 
+# Variables
+source("data.R")
 Y.d <- Y
 emae <- dlog_residuos
 Y <- cbind(emae, i, r)
+
+
+# Unitary root testing ####
+# Dickey Fuller test
+
+#Para las variables sin estar en diferencias.
+r_df <- ur.df(y = r, type = "drift", lags = 2, selectlags = "Fixed") # ***
+i_df <- ur.df(y = i, type = "drift", lags = 2, selectlags = "Fixed") # ***
+emae_df <- ur.df(y = emae, type = "drift", lags = 2, selectlags = "Fixed") # ***
+pi_df <- ur.df(y = pi, type = "drift", lags = 2, selectlags = "Fixed") # ***
+
+# Para las variables en diferencias
+i_dif_df <- ur.df(y = i_dif, type = "drift", lags = 2, selectlags = "Fixed") # ***
+pi_dif_df <- ur.df(y = pi_dif, type = "drift", lags = 2, selectlags = "Fixed") # ***
+emae_dif_df <- ur.df(y = emae_dif, type = "drift", lags = 2, selectlags = "Fixed") # ***
+
+
+# Show results
+summary(r_df)
+summary(i_df)
+summary(emae_df)
+summary(pi_df)
+
+summary(i_dif_df)
+summary(pi_dif_df)
+summary(emae_dif_df)
 
 
 
