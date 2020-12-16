@@ -68,39 +68,40 @@ SVAR
 source("PS2_SVAR_Analysis.R")
 source("PS2_SVAR_Bootstrap.R")
 source("PS2_SVAR_Plots.R")
+source("SVAR_SIRF_m.R")
 
 # Parameters
 a <- 0.95 # Confidence level
-R <- 500 # No. of bootstrap replications
+R <- 1000 # No. of bootstrap replications
 H <- 8 # Horizon
 
 # Bootstrap replications
 Yb <- boot.rb.replicate(VAR, Yd0, pmax, R)
 
+
 # IRF (bootstrap)
-SVAR.SIRF.boot <- SVAR.sirf.boot(SVAR, Amat, Bmat, Yb, pmax, H, a, R)
-plot.sirf.boot(SVAR.SIRF.boot, m, H)
+#SVAR.SIRF.boot <- SVAR.sirf.boot(SVAR, Amat, Bmat, Yb, pmax, H, a, R)
+#plot.sirf.boot(SVAR.SIRF.boot, m, H)
+
+# IRF (bootstrap with modified file)
+SVAR.SIRF.boot2 <- SVAR.sirf.boot.modified(SVAR, Amat, Bmat, Yb, pmax, H, a, R)
+plot.sirf.boot(SVAR.SIRF.boot2, m, H)
+
 
 # Cumulative IRF (bootstrap)
-SVAR.SIRF.c.boot <- SVAR.sirf.boot(SVAR, Amat, Bmat, Yb, pmax, H, a, R, cumulative = TRUE)
-plot.sirf.boot(SVAR.SIRF.c.boot, m, H)
+#SVAR.SIRF.c.boot <- SVAR.sirf.boot(SVAR, Amat, Bmat, Yb, pmax, H, a, R, cumulative = TRUE)
+#plot.sirf.boot(SVAR.SIRF.c.boot, m, H)
+
+# Cumulative IRF (bootstrap with modified file)
+SVAR.SIRF.c.boot2 <- SVAR.sirf.boot.modified(SVAR, Amat, Bmat, Yb, pmax, H, a, R, cumulative = TRUE)
+plot.sirf.boot(SVAR.SIRF.c.boot2, m, H)
+
 
 # FEVD (bootstrap)
 SVAR.FEVD.boot <- SVAR.fevd.boot(SVAR, Amat, Bmat, Yb, pmax, H, a, R)
 plot.fevd.boot(SVAR.FEVD.boot, m, H)
 
+
 # HD
-SVAR.HD <- SVAR.hd(SVAR)
-plot.hd(Y.d, SVAR.HD, m, pmax)
-
-
-
-
-
-
-
-
-
-
-
-
+#SVAR.HD <- SVAR.hd(SVAR)
+#plot.hd(Y.d, SVAR.HD, m, pmax)
