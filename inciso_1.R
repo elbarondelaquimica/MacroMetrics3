@@ -1,10 +1,16 @@
 #-------------------------------------------------------------#
 #               Inciso 1
 #-------------------------------------------------------------#  
+# Clean and set directory:
+remove(list = ls(all.names = TRUE))
+gc()
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+
 # Required libraries
 library(tsbox) # for working with different objects
 library(ggplot2)  # for creating graphs
 library(urca) # for tests
+
 
 # Variables
 source("data.R")
@@ -14,7 +20,7 @@ Y <- cbind(emae, i, r)
 
 
 # Unitary root testing ####
-# Dickey Fuller test
+# Dickey Fuller test with drift
 
 #Para las variables sin estar en diferencias.
 r_df <- ur.df(y = r, type = "drift", lags = 2, selectlags = "Fixed") # ***
@@ -39,6 +45,29 @@ summary(pi_dif_df)
 summary(emae_dif_df)
 
 
+# Dickey Fuller test with deterministic trend
+
+#Para las variables sin estar en diferencias.
+r_df2 <- ur.df(y = r, type = "trend", lags = 2, selectlags = "Fixed") # ***
+i_df2 <- ur.df(y = i, type = "trend", lags = 2, selectlags = "Fixed") # ***
+emae_df2 <- ur.df(y = emae, type = "trend", lags = 2, selectlags = "Fixed") # ***
+pi_df2 <- ur.df(y = pi, type = "trend", lags = 2, selectlags = "Fixed") # ***
+
+# Para las variables en diferencias
+i_dif_df2 <- ur.df(y = i_dif, type = "trend", lags = 2, selectlags = "Fixed") # ***
+pi_dif_df2 <- ur.df(y = pi_dif, type = "trend", lags = 2, selectlags = "Fixed") # ***
+emae_dif_df2 <- ur.df(y = emae_dif, type = "trend", lags = 2, selectlags = "Fixed") # ***
+
+
+# Show results
+summary(r_df2)
+summary(i_df2)
+summary(emae_df2)
+summary(pi_df2)
+
+summary(i_dif_df2)
+summary(pi_dif_df2)
+summary(emae_dif_df2)
 
 
 # Work with data ####
@@ -97,4 +126,5 @@ ggsave("i_dif.png")
 graph_pi_dif <- make_graph(df = source_of_graphs3, colour = "firebrick4", variable = source_of_graphs3$pi_dif, title = "")
 graph_pi_dif
 ggsave("pi_dif.png")
+
 
