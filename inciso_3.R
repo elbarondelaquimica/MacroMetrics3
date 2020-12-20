@@ -109,4 +109,10 @@ plot.fevd.boot(SVAR.FEVD.boot.LR, m, H)
 
 # SVAR analysis: transformed IRF for inflation (TBC) ####
 SVAR.SIRF.c.boot.LR.inflation <- trans.pw.boot(operator = "-", I = SVAR.SIRF.c.boot.LR2$pe, vi=3, vj=2, sk=3, boot = SVAR.SIRF.c.boot.LR2$boot, a)
-plot(SVAR.SIRF.c.boot.LR2$boot)
+
+# Plotting:
+plot(0:H, SVAR.SIRF.c.boot.LR.inflation$pe, xlab = "Horizon", ylab = "", ylim = c(min(SVAR.SIRF.c.boot.LR.inflation$lb), max(SVAR.SIRF.c.boot.LR.inflation$ub)), type = "o", lwd = 2)
+grid(NULL, NULL, lty = 1)
+x <- c(0:H, H:0)
+y <- c(c(SVAR.SIRF.c.boot.LR.inflation$lb), rev(c(SVAR.SIRF.c.boot.LR.inflation$ub)))
+polygon(x, y, col = adjustcolor("deepskyblue3", alpha.f = 0.5), border = NA)
