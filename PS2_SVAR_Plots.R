@@ -59,7 +59,7 @@ plot.sirf.boot <- function(X, m, H) {
       grid(NULL, NULL, lty = 1)
       xx <- c(0:H, H:0)
       yy <- c(c(X$lb[i, j, ]), rev(c(X$ub[i, j, ])))
-      polygon(xx, yy, col = adjustcolor("grey", alpha.f = 0.5), border = NA)
+      polygon(xx, yy, col = adjustcolor("steelblue4", alpha.f = 0.5), border = NA)
     }
   }
 }
@@ -76,7 +76,7 @@ plot.fevd.boot <- function(X, m, H) {
       grid(NULL, NULL, lty = 1)
       xx <- c(0:H, H:0)
       yy <- c(c(X$lb[i, j, ]), rev(c(X$ub[i, j, ])))
-      polygon(xx, yy, col = adjustcolor("grey", alpha.f = 0.5), border = NA)
+      polygon(xx, yy, col = adjustcolor("steelblue4", alpha.f = 0.5), border = NA)
     }
   }
 }
