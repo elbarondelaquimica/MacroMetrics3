@@ -1,6 +1,6 @@
 #install.packages("tstools")
 library(tstools)
-
+library(writexl)
 #Procesamiento EMAE.
 
 emae.file <- paste(tempfile(), ".csv", sep = "")
@@ -45,7 +45,7 @@ dlog.emae.adj <- dlog.emae.reg$residuals
 dlog_residuos <- as.numeric(dlog.emae.adj)
 dlog_residuos <- ts(dlog_residuos, start = c(2004, 01), end = c(2019, 12), frequency = 12)
 
-#DATOS INFLACIÃN
+#DATOS INFLACIoN
 #Traemos IPC base 2020 generado en ejercitaciÃ³n 1.
 source("PS1_Data.R")
 
@@ -81,7 +81,7 @@ emae_dif = diff(dlog_residuos)
 pi_dif = diff(pi)
 #plot(pi_dif)
 
-#Tasa de interÃ©s nominal.
+#Tasa de interes nominal.
 i_dif = diff(i)
 #plot(i_dif)
 
@@ -111,3 +111,25 @@ remove(anio, badlar.file, dlog.emae.adj, d2009, d2009_1, d2009_2, d2012, d2012_1
 #summary(r_df)
 
 Y <- cbind(i_dif, pi_dif, emae_dif)
+
+
+#Datos para Punto 4.
+#Primeras diferencias del EMAE - su media.
+dy = emae_dif - mean (emae_dif)
+
+#Primeras diferencias de la tasa de interés nominal - su media.
+di = i_dif - mean (i_dif)
+
+#Tasa de interes real - media
+ri = r - mean (r)
+ri = window(ri, start = c(2004, 2))
+
+#Standard deviations 
+sd_dy <- sd(dy)/10
+sd_di <- sd(di)/10
+sd_ri <- sd(ri)/10
+
+output <- data.frame(dy, ri, di)
+
+
+write_xlsx(output, "Variables.xlsx")
